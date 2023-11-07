@@ -132,11 +132,11 @@ func (l LinkedList[T]) findPrevNode(node *Node[T]) *Node[T] {
 	return nil
 }
 
-func (l *LinkedList[T]) PopFront() {
+func (l *LinkedList[T]) PopFront() *Node[T] {
 	if l.root == nil {
-		return
+		return nil
 	}
-
+	n := l.root
 	l.root.next, l.root = nil, l.root.next
 	//l.root = l.root.next
 	//l.root.next = nil
@@ -144,6 +144,7 @@ func (l *LinkedList[T]) PopFront() {
 		l.tail = nil
 	}
 	l.count-- // decrease count after popfront
+	return n
 }
 
 func (l *LinkedList[T]) Remove(node *Node[T]) { // 이전 노드 찾아서 next를 지우고자 할 노드의 next로 지정
@@ -163,4 +164,34 @@ func (l *LinkedList[T]) Remove(node *Node[T]) { // 이전 노드 찾아서 next�
 		l.tail = prev
 	}
 	l.count--
+}
+
+func (l *LinkedList[T]) Reverse() { // 메모리를 추가해서 사용
+	newL := &LinkedList[T]{} // Create a new linkedlist
+	for l.root != nil {
+		n := l.PopFront()       // 기존 노드를 pop을 한 후
+		newL.PushFront(n.Value) // 새로운 노드에 push를 한다.
+	}
+	l.count = newL.count // 기존의 count 필드를 새로운 노드에 복사
+	l.root = newL.root   // 기존의 root 필드를 새로운 노드에 복사
+	l.tail = newL.tail   // 기존의 tail 필드를 새로운 노드에 복사
+}
+
+func (l *LinkedList[T]) Reverse2() {
+	if l.root == nil {
+		return
+	}
+	node := l.root    // 1 기록
+	next := node.next // 그 다음 노드 기록 ex - 2
+	l.root.next = nil // 역순이 되면 root의 next는 nil임(root가 tail인 셈)
+
+	for next != nil {
+		nextnext := next.next // 스왑핑 할때 링크가 끊어지니까 미리 저장
+		next.next = node
+		node = next
+		next = nextnext // 스왑핑 후 넥스트 링크 기록
+	}
+
+	l.root, l.tail = l.tail, l.root
+
 }
