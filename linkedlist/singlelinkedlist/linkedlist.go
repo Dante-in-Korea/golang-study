@@ -1,4 +1,4 @@
-package golang
+package singlelinkedlist
 
 type Node[T any] struct {
 	next  *Node[T] //Edges 다음 노드를 가리키는 포인터
