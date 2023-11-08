@@ -197,3 +197,19 @@ func (l *LinkedList[T]) Remove(node *Node[T]) {
 	node.next = nil
 	l.count--
 }
+func (l *LinkedList[T]) Reverse() {
+	if l.root == nil {
+		return
+	}
+	node := l.root
+	var next *Node[T]
+
+	for node != nil {
+		next = node.next
+
+		node.prev, node.next = node.next, node.prev
+		node = next
+	}
+
+	l.root, l.tail = l.tail, l.root
+}

@@ -156,3 +156,17 @@ func TestRemove(t *testing.T) {
 	assert.Equal(t, 3, l.Front().Value)
 	assert.Equal(t, 3, l.Back().Value)
 }
+
+func TestReverse(t *testing.T) {
+	var l LinkedList[int]
+
+	l.PushBack(1)
+	l.PushBack(2)
+	l.PushBack(3)
+	l.PushBack(4)
+	l.Reverse()
+
+	assert.Equal(t, 4, l.Front().Value)
+	assert.Equal(t, 1, l.Back().Value)
+	assert.Equal(t, 3, l.GetAt(1).Value)
+}
