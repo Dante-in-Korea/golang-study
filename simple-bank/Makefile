@@ -7,7 +7,7 @@ postgres:
 	docker run --name postgres --network bank-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:16.0
 
 createdb:
-	docker exec -it postgres createdb --username=root --owner=root simple_bank
+    docker exec -it postgres createdb --username=root --owner=root simple_bank
 
 dropdb:
 	docker exec -it postgres dropdb simple_bank
@@ -22,4 +22,4 @@ sqlc:
 	sqlc generate
 
 test:
-    go test -v -cover ./...
+	go test -v -cover -short ./...
